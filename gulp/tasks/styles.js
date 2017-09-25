@@ -4,9 +4,15 @@ var autoprefixer = require('autoprefixer');
 var cssvars = require('postcss-simple-vars');
 var nestedcss = require('postcss-nested');
 var cssImport = require('postcss-import');
+var mixins = require('postcss-mixins');
 
 gulp.task('styles', function(){
     return gulp.src('./app/assets/styles/styles.css')
-    .pipe(postcss([cssImport,cssvars,nestedcss,autoprefixer]))
+    .pipe(postcss([cssImport,mixins,cssvars,nestedcss,autoprefixer]))
+    .on('error',function(errorInfo){
+        console.log(errorInfo.toString());
+        this.emit('end');
+
+    })
     .pipe(gulp.dest('./app/temp/styles'));
 });
